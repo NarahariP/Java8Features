@@ -1,5 +1,7 @@
 package com.hari;
 
+import java.util.Comparator;
+
 /**
  * @author Narahari
  *
@@ -11,49 +13,26 @@ public class ComparatorLambdaExpressionExample {
 		/**
 		 * Before Java 8
 		 */
-		Runnable runnable = new Runnable() {
+		Comparator<Integer> comparator = new Comparator<Integer>() {
 			@Override
-			public void run() {
-				System.out.println("Inside Runnable...");
+			public int compare(Integer o1, Integer o2) {
+				return o1.compareTo(o2); //0 -> o1==o2, 1 -> o1>02, -1 -> o1<o2
 			}
 		};
-		new Thread(runnable).run();
+		System.out.println("Before Java 8 comparator Result: "+comparator.compare(8, 4));
 
 		/**
 		 * In Java 8
 		 * Lambda  syntax: () -> {}
 		 */
-		Runnable runnableLambda = () -> {
-			System.out.println("Inside Runnable with Lambda....");
-		};
-		new Thread(runnableLambda).run();
+		 Comparator<Integer> comparatorLambda = (Integer a, Integer b) -> {return a.compareTo(b);};
+		 System.out.println("In Java 8 comparatorLambda result: "+comparatorLambda.compare(1, 4));
+		 
+		 Comparator<Integer> comparatorLambda1 = (Integer a, Integer b) ->  a.compareTo(b);
+		 System.out.println("In Java 8 comparatorLambda1 result: "+comparatorLambda1.compare(8, 8));
 
-		/**
-		 * In Java 8
-		 * Lambda  syntax: () -> {} - Simplified - when we have single statement no need of curly braces, 
-		 * If we have it required otherwise complier will give error 
-		 */
-		Runnable runnableLambda1 = () -> System.out.println("Inside Runnable with Lambda simplified....");
-		new Thread(runnableLambda1).run();
-
-		/**
-		 * Before Java 8
-		 * Lambda  syntax: () -> {} - Simplified 
-		 * Without Creating runnable Object
-		 */
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				System.out.println("Inside Runnable Without Lambda Creating runnable Object");	
-			}
-		}); 
-
-		/**
-		 * In Java 8
-		 * Lambda  syntax: () -> {} - Simplified 
-		 * Without Creating runnable Object
-		 */
-		new Thread(()-> System.out.println("Inside Runnable Without Creating runnable Object"));
+		 Comparator<Integer> comparatorLambda2 = (a, b) ->  a.compareTo(b);
+		 System.out.println("In Java 8 comparatorLambda2 result: "+comparatorLambda2.compare(8, 4));
 
 
 	}
