@@ -1,8 +1,7 @@
 package com.hari;
 
-import java.io.ObjectInputStream.GetField;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 import com.hari.model.Employee;
 import com.hari.model.EmployeeService;
@@ -14,47 +13,26 @@ import com.hari.model.EmployeeService;
 public class BiConsumerExample {
 	
 	static List<Employee> employeeList = EmployeeService.getEmployeeList();
-	static Consumer<Employee> consumer1 = (employee) -> System.out.print(employee.getName());
-	static Consumer<Employee> consumer2 = (employee) -> System.out.println(employee.getKnowTechs());
-
-	public static void printNameWay1() {
-		System.out.println("printNameWay1 :");
-		Consumer<Employee> consumer = (employee) -> System.out.println(employee);
-		employeeList.forEach(consumer);
+	
+	public static void test() {
+		
+		BiConsumer<String, String> biConsumer = (a,b) -> System.out.println("a : "+a +" ; b : "+b);
+		biConsumer.accept("Hari", "P");
+		
+		BiConsumer<Integer, Integer> biConsumerMultiply = (a,b) -> System.out.println("Multiplication: " +a*b);
+		BiConsumer<Integer, Integer> biConsumerDiv= (a,b) -> 		System.out.println("Division: "+a/b);
+		biConsumerMultiply.andThen(biConsumerDiv).accept(10, 2);
 	}
 	
-	public static void printNameWay2() {
-		System.out.println("printNameWay2 :");
-		employeeList.forEach((employee) -> System.out.println(employee));
-	}
-	
-	public static void printNameAndKnowTechs1() {
-		System.out.println("printNameAndKnowTechs1 :");
-		employeeList.forEach(consumer1.andThen(consumer2)); //Consumer Chaining
-	}
-	
-	public static void printNameAndKnowTechs2() {
-		System.out.println("printNameAndKnowTechs2 :");
-		employeeList.forEach((employee) -> {
-			System.out.println(employee.getName() +":"+employee.getKnowTechs());
-		}); 
-	}
-	
-	public static void printNameAndKnownTechUsingConditions() {
-		System.out.println("printNameAndKnownTechUsingConditions :");
-		employeeList.forEach( (employee) -> {
-			if(employee.getDeptNo() >= 5 && employee.getSalInLaks() >= 6.5) {
-				consumer1.andThen(consumer2).accept(employee);
-			}
-		});
+	public static void nameAndKnownTechs() {
+		BiConsumer<String, List<String>> biConsumer = (name, kownTechs) ->{
+			System.out.println(name +" : "+kownTechs);
+		};
+		employeeList.forEach( employee -> biConsumer.accept(employee.getName(), employee.getKnowTechs()));
 	}
 	
 	public static void main(String[] args) {
-		printNameWay1();
-		printNameWay2();
-		printNameAndKnowTechs1();
-		printNameAndKnowTechs2();
-		printNameAndKnownTechUsingConditions();
+		test();
+		nameAndKnownTechs();
 	}
-	
 }

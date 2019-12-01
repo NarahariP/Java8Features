@@ -13,7 +13,7 @@ public class EmployeeService {
 	 * @return List<Employee>
 	 */
 	public static List<Employee> getEmployeeList() {
-		Employee emp1 = new Employee("Abc", 2, "Male", 7.6, Arrays.asList("Java", ".Net", "Oracle"));
+		Employee emp1 = new Employee("Abc", 2, "Male", 5.6, Arrays.asList("Java", ".Net", "Oracle"));
 		Employee emp2 = new Employee("Mno", 2, "FeMale", 9.5, Arrays.asList("Angular", "Python", "Oracle"));
 		
 		Employee emp3 = new Employee("UVW", 5, "Male", 4.6, Arrays.asList("Java", "HTML", "C++"));
