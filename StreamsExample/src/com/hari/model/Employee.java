@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Employee {
 
+	private int id;
 	private String name;
 	private int deptNo;
 	private String gender;
@@ -46,10 +47,11 @@ public class Employee {
 	}
 	@Override
 	public String toString() {
-		return "Employee [name=" + name + ", deptNo=" + deptNo + ", gender=" + gender + ", salInLaks=" + salInLaks
+		return "Employee [id="+id +", name=" + name + ", deptNo=" + deptNo + ", gender=" + gender + ", salInLaks=" + salInLaks
 				+ ", knowTechs=" + knowTechs + "]";
 	}
-	public Employee(String name, int deptNo, String gender, Double salInLaks, List<String> knowTechs) {
+	public Employee(int id, String name, int deptNo, String gender, Double salInLaks, List<String> knowTechs) {
+		this.id = id;
 		this.name = name;
 		this.deptNo = deptNo;
 		this.gender = gender;
@@ -63,5 +65,11 @@ public class Employee {
 	public Employee(String name) {
 		this.name = name;
 	}
-	 
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 }

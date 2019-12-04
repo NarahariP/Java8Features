@@ -62,15 +62,37 @@ public class StreamExample {
 				.collect(Collectors.toMap(Employee::getName, Employee::getKnowTechs));
 			System.out.println(employeeMap5);
 			
-			/**
-			 * parallelStream()
-			 * Read employee name and knowntechs.
-			 * filtering with deptno is greaterthan 5 and salary is greater than 5.5
-			 */
-			Map<String, List<String>> employeeMap6 = EmployeeService.getEmployeeList().parallelStream()
-				.filter(employeeDeptPredicate)
-				.filter(employeeSalPredicate)
-				.collect(Collectors.toMap(Employee::getName, Employee::getKnowTechs));
-			System.out.println(employeeMap6);
+		/**
+		 * parallelStream()
+		 * Read employee name and knowntechs.
+		 * filtering with deptno is greaterthan 5 and salary is greater than 5.5
+		 */
+		Map<String, List<String>> employeeMap6 = EmployeeService.getEmployeeList().parallelStream()
+			.filter(employeeDeptPredicate)
+			.filter(employeeSalPredicate)
+			.collect(Collectors.toMap(Employee::getName, Employee::getKnowTechs));
+		System.out.println(employeeMap6);
+	
+		/**
+		 * Remove skipping particular item from the list based on condition 
+		 */
+		Predicate<Employee> employeePredicate  = employee ->employee.getId()!=5;
+		List<Employee> empList = EmployeeService.getEmployeeList().stream().filter(employeePredicate::test).collect(Collectors.toList());
+		System.out.println(empList);
+		
+		/**
+		 * Remove Item by using removeIf() 
+		 * UnsupportedOperationException - elements
+		 * cannot be removed from this collection. Implementations throw
+		 * exception if a matching element cannot be removed or if, in general, removal
+		 * is not supported.
+		 */
+		List<Employee> originalEmployeeList = EmployeeService.getEmployeeList();
+		System.out.println(originalEmployeeList);
+		Predicate<Employee> employeePredicate2  = employee ->employee.getId()==1;
+		boolean flag = originalEmployeeList.removeIf(emp -> employeePredicate2.test(emp));
+		System.out.println(flag);
+		System.out.println(originalEmployeeList);
+		
 	}
 }
