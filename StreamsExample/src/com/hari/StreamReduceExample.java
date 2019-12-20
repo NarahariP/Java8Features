@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.hari.model.Employee;
+import com.hari.model.EmployeeService;
+
 /**
  * @author Narahari
  *
@@ -33,6 +36,12 @@ public class StreamReduceExample {
 				.reduce(1, (a, b) -> a * b);
 	}
 
+	private static Optional<Employee> getHighestSalaryEmployee() {
+		return EmployeeService.getEmployeeList().stream() // Employees one by one
+				.reduce((employee1, employee2) -> employee1.getSalInLaks() > employee2.getSalInLaks() ? employee1
+						: employee2);
+	}
+
 	/**
 	 * @param args
 	 */
@@ -49,6 +58,12 @@ public class StreamReduceExample {
 		System.out.println(optionalResult1.isPresent());
 		if (optionalResult1.isPresent()) {
 			System.out.println("Result:: " + optionalResult1.get());
+		}
+
+		System.out.println("Highest Salary Emeployee:: ");
+		final Optional<Employee> employeeOptional = getHighestSalaryEmployee();
+		if (employeeOptional.isPresent()) {
+			System.out.println(employeeOptional);
 		}
 	}
 
